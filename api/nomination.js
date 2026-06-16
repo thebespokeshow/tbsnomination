@@ -8,9 +8,13 @@ const { createClient } = require('@supabase/supabase-js');
 const { Resend }       = require('resend');
 
 /* ─── Environment Variables ────────────────────────────────────────── */
-const SUPABASE_URL      = process.env.SUPABASE_URL;
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
-const RESEND_API_KEY    = process.env.RESEND_API_KEY;
+const SUPABASE_URL         = process.env.SUPABASE_URL;
+// Prefer the service-role key (bypasses RLS — safe here because this code
+// runs server-side only and is never sent to the browser).
+// Fall back to SUPABASE_ANON_KEY only if the service key is not configured,
+// but note that RLS must then have an INSERT policy for the anon role.
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY;
+const RESEND_API_KEY       = process.env.RESEND_API_KEY;
 
 const NOTIFY_EMAIL  = 'siddarth1981@gmail.com';
 const FROM_EMAIL    = 'TBS Nominations <onboarding@resend.dev>'; // swap to your verified domain once ready
@@ -22,10 +26,15 @@ let _resend   = null;
 
 function getSupabase() {
   if (!_supabase) {
-    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-      throw new Error('Missing Supabase environment variables (SUPABASE_URL / SUPABASE_ANON_KEY).');
+    if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+      throw new Error(
+        'Missing Supabase environment variables. ' +
+        'Set SUPABASE_URL and SUPABASE_SERVICE_KEY (service-role key) in your Vercel project.'
+      );
     }
-    _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    _supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
+      auth: { persistSession: false },
+    });
   }
   return _supabase;
 }
