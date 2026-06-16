@@ -694,7 +694,11 @@
       try { json = await res.json(); } catch (_) {}
 
       if (!res.ok) {
-        throw new Error(json.error || ('Server error (' + res.status + '). Please try again.'));
+        // Show detailed error during debugging (includes Supabase error detail)
+        var msg = json.error || ('Server error (' + res.status + ').');
+        if (json.detail) msg += ' Detail: ' + json.detail;
+        if (json.code)   msg += ' [code: ' + json.code + ']';
+        throw new Error(msg);
       }
 
       /* Success — swap to success panel */

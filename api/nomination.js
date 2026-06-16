@@ -228,7 +228,13 @@ module.exports = async function handler(req, res) {
 
     if (dbError) {
       console.error('[Supabase insert error]', dbError);
-      return json(res, 500, { error: 'Failed to save nomination. Please try again.' });
+      // Surface the real error code/message to help diagnose env/table issues
+      const detail = dbError.message || dbError.details || dbError.hint || JSON.stringify(dbError);
+      return json(res, 500, {
+        error: 'Failed to save nomination. Please try again.',
+        detail,
+        code: dbError.code || null,
+      });
     }
 
     insertedId = inserted?.id ?? null;
