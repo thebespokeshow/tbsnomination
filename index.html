@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bespoke Show · Season 02</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── TOKENS ── */
+  :root {
+    --ink:           #1A1A2E;
+    --ink-2:         #4A4A6A;
+    --ink-3:         #8A8AAA;
+    --bg:            #F6F4EF;
+    --surface:       #FFFFFF;
+    --border:        rgba(26,26,46,0.10);
+    --border-strong: rgba(26,26,46,0.18);
+    --amber-bg:      #FDF3E3;
+    --amber:         #C47A1E;
+    --amber-dark:    #7A4B0E;
+    --radius:        10px;
+    --radius-lg:     14px;
+    --font:          'DM Sans', sans-serif;
+    --burgundy:      #6B2D3E;
+    --block-bg:      #2E2E2E;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font);
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── TBS LOGO ── */
+  .tbs-logo {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    text-decoration: none;
+  }
+  .tbs-logo-blocks { display: flex; gap: 4px; }
+  .tbs-logo-block {
+    width: 28px; height: 28px;
+    background: var(--block-bg);
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700; color: #fff;
+    font-family: var(--font); flex-shrink: 0;
+  }
+  .tbs-logo-wordmark { display: flex; gap: 4px; }
+  .tbs-logo-word {
+    font-size: 7.5px; font-weight: 600; letter-spacing: 0.13em;
+    color: var(--burgundy); text-transform: uppercase;
+    width: 28px; text-align: center; display: block;
+  }
+  .tbs-logo-lg .tbs-logo-block { width: 38px; height: 38px; font-size: 20px; }
+  .tbs-logo-lg .tbs-logo-word  { font-size: 9px; width: 38px; }
+  .tbs-logo-lg .tbs-logo-blocks { gap: 5px; }
+  .tbs-logo-lg .tbs-logo-wordmark { gap: 5px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 56px;
+    background: rgba(246,244,239,0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-right { display: flex; align-items: center; gap: 28px; }
+  .nav-season { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); }
+  .nav-cta {
+    background: var(--amber); color: #fff;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 10px 22px; border-radius: var(--radius); text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--amber-dark); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 140px 72px 80px;
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 50%; height: 100%;
+    background: linear-gradient(135deg, transparent 40%, rgba(196,122,30,0.05) 100%);
+    pointer-events: none;
+  }
+  .hero-eyebrow { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--amber); margin-bottom: 28px; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(68px, 10vw, 120px); font-weight: 700; line-height: 0.9; color: var(--ink); }
+  .hero-title .accent { color: var(--amber); }
+  .hero-sub {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(15px, 1.8vw, 18px); font-style: italic;
+    color: var(--ink-2); max-width: 460px; margin: 32px 0 52px;
+    line-height: 1.7; border-left: 2px solid var(--amber); padding-left: 18px;
+  }
+  .hero-stats { display: flex; gap: 56px; flex-wrap: wrap; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700; color: var(--amber); line-height: 1; }
+  .stat-label { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); margin-top: 6px; }
+
+  /* ── SHARED ── */
+  .section { padding: 96px 72px; max-width: 1160px; margin: 0 auto; }
+  .eyebrow { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--amber); margin-bottom: 14px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 46px); font-weight: 700; color: var(--ink); line-height: 1.1; margin-bottom: 40px; }
+  .ruled { border-top: 1px solid var(--border); }
+
+  /* ── WHAT IS TBS ── */
+  .what-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: start; }
+  .what-body { font-size: 16px; color: var(--ink-2); line-height: 1.85; }
+  .what-body p + p { margin-top: 18px; }
+  .pillars { display: flex; flex-direction: column; gap: 14px; }
+  .pillar {
+    background: var(--amber-bg); border: 1px solid rgba(196,122,30,0.15);
+    border-radius: var(--radius); padding: 20px 22px;
+  }
+  .pillar-num { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--amber); opacity: 0.4; line-height: 1; margin-bottom: 8px; }
+  .pillar-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber-dark); margin-bottom: 5px; font-weight: 500; }
+  .pillar-body { font-size: 13px; color: var(--ink-2); line-height: 1.6; }
+
+  /* ── PAST ── */
+  .past-bg { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .campus-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin-bottom: 32px; }
+  .campus-card {
+    border: 1px solid var(--border-strong); border-radius: var(--radius);
+    padding: 16px 18px; position: relative; overflow: hidden; background: var(--bg);
+  }
+  .campus-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--amber); opacity: 0.6; }
+  .campus-name { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.4; }
+  .campus-city { font-size: 11px; color: var(--ink-3); margin-top: 4px; }
+  .past-note { font-size: 13px; color: var(--ink-2); font-style: italic; border-left: 2px solid var(--border-strong); padding-left: 16px; line-height: 1.8; max-width: 580px; }
+
+  /* ── NOMINATIONS ── */
+  .nom-bg { background: var(--bg); border-top: 1px solid var(--border); }
+  .nom-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-bottom: 52px; align-items: start; }
+  .nom-body { font-size: 16px; color: var(--ink-2); line-height: 1.85; }
+  .nom-body p + p { margin-top: 16px; }
+  .nom-criteria { display: flex; flex-direction: column; gap: 13px; }
+  .criterion { display: flex; gap: 13px; align-items: flex-start; }
+  .c-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--amber); margin-top: 9px; flex-shrink: 0; }
+  .c-text { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+
+  /* FORM */
+  .nom-form {
+    background: var(--surface); border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg); padding: 44px 48px;
+    box-shadow: 0 2px 24px rgba(26,26,46,0.06);
+  }
+  .form-title { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--ink); margin-bottom: 6px; }
+  .form-sub { font-size: 13px; color: var(--ink-3); margin-bottom: 36px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .fg { display: flex; flex-direction: column; gap: 7px; }
+  .fg.full { grid-column: 1 / -1; }
+
+  .fg label {
+    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--amber-dark); font-weight: 500;
+  }
+
+  .fg input,
+  .fg textarea,
+  .fg select {
+    background: var(--bg); border: 1px solid var(--border-strong);
+    border-radius: var(--radius); padding: 11px 14px;
+    color: var(--ink); font-family: var(--font); font-size: 14px;
+    outline: none; transition: border-color 0.2s; width: 100%;
+  }
+  .fg input::placeholder, .fg textarea::placeholder { color: var(--ink-3); }
+  .fg input:focus, .fg textarea:focus, .fg select:focus { border-color: var(--amber); }
+
+  .fg input.field-error,
+  .fg textarea.field-error,
+  .fg select.field-error { border-color: #c0392b; }
+
+  .fg select {
+    appearance: none; cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A8AAA' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px;
+  }
+  .fg textarea { resize: vertical; min-height: 96px; }
+
+  .form-footer { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-top: 28px; }
+
+  .btn-submit {
+    background: var(--amber); color: #fff;
+    font-family: var(--font); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 13px 30px; border: none; border-radius: var(--radius);
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .btn-submit:hover:not(:disabled) { background: var(--amber-dark); transform: translateY(-1px); }
+  .btn-submit:active:not(:disabled) { transform: translateY(0); }
+  .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; }
+
+  /* Spinner inside button */
+  .btn-spinner {
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: btn-spin 0.65s linear infinite;
+    display: none;
+    flex-shrink: 0;
+  }
+  .btn-submit.loading .btn-spinner { display: block; }
+  @keyframes btn-spin { to { transform: rotate(360deg); } }
+
+  .form-small { font-size: 12px; color: var(--ink-3); line-height: 1.6; max-width: 280px; }
+
+  /* Submission error banner */
+  .form-error-banner {
+    display: none;
+    align-items: flex-start;
+    gap: 10px;
+    background: #fff5f5;
+    border: 1px solid rgba(192,57,43,0.25);
+    border-radius: var(--radius);
+    padding: 13px 16px;
+    margin-top: 16px;
+    font-size: 13px;
+    color: #9b2335;
+    line-height: 1.55;
+    grid-column: 1 / -1;
+  }
+  .form-error-banner.visible { display: flex; }
+
+  /* Success */
+  .form-success { display: none; text-align: center; padding: 56px 24px; }
+  .nom-form.submitted .form-fields { display: none; }
+  .nom-form.submitted .form-success { display: block; }
+  .success-mark { font-family: 'Playfair Display', serif; font-size: 40px; color: var(--amber); margin-bottom: 20px; }
+  .success-title { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--ink); margin-bottom: 12px; }
+  .success-body { font-size: 15px; color: var(--ink-2); line-height: 1.75; }
+
+  /* ── FOOTER ── */
+  .footer-outer { border-top: 1px solid var(--border-strong); background: var(--surface); }
+  .footer-inner {
+    max-width: 1160px; margin: 0 auto; padding: 48px 72px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 32px;
+  }
+  .footer-left { display: flex; flex-direction: column; gap: 14px; }
+  .footer-meta { font-size: 13px; color: var(--ink-2); }
+  .footer-tm { font-size: 11px; color: var(--ink-3); }
+  .footer-right { text-align: right; }
+  .footer-contact { font-size: 17px; color: var(--amber); font-weight: 500; }
+  .footer-contact a { color: inherit; text-decoration: none; }
+  .footer-contact a:hover { text-decoration: underline; }
+  .footer-email { font-size: 12px; color: var(--ink-3); margin-top: 5px; }
+  .footer-season { font-size: 10px; color: var(--ink-3); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 800px) {
+    nav { padding: 14px 24px; }
+    .nav-season { display: none; }
+    .hero { padding: 110px 24px 64px; }
+    .section { padding: 64px 24px; }
+    .what-grid, .nom-intro { grid-template-columns: 1fr; gap: 40px; }
+    .campus-grid { grid-template-columns: 1fr 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .fg.full { grid-column: auto; }
+    .nom-form { padding: 28px 24px; }
+    .hero-stats { gap: 32px; }
+    .footer-inner { padding: 40px 24px; flex-direction: column; }
+    .footer-right { text-align: left; }
+  }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="tbs-logo">
+    <div class="tbs-logo-blocks">
+      <div class="tbs-logo-block">T</div>
+      <div class="tbs-logo-block">B</div>
+      <div class="tbs-logo-block">S</div>
+    </div>
+    <div class="tbs-logo-wordmark">
+      <span class="tbs-logo-word">The</span>
+      <span class="tbs-logo-word">Bespoke</span>
+      <span class="tbs-logo-word">Show</span>
+    </div>
+  </a>
+  <div class="nav-right">
+    <span class="nav-season">Season 02 · 2026</span>
+    <a href="#nominate" class="nav-cta">Nominate a Panelist</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">The Bespoke Show &nbsp;·&nbsp; Season 02 &nbsp;·&nbsp; 2026</div>
+  <div class="hero-title">THE ROOM<br><span class="accent">THINKS.</span></div>
+  <div class="hero-sub">
+    Senior practitioners. A curated conversation.<br>
+    An honest room your students won't find anywhere else.
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">7+</div>
+      <div class="stat-label">Campuses hosted</div>
+    </div>
+    <div>
+      <div class="stat-num">90</div>
+      <div class="stat-label">Minutes. No fluff.</div>
+    </div>
+    <div>
+      <div class="stat-num">S02</div>
+      <div class="stat-label">Now returning</div>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT IS TBS -->
+<div class="ruled">
+  <div class="section" id="about">
+    <div class="eyebrow">What This Is</div>
+    <div class="section-title">Not a guest lecture.<br>Not a webinar.</div>
+    <div class="what-grid">
+      <div class="what-body">
+        <p>The Bespoke Show is a curated industry panel — 2 to 3 senior practitioners, moderated live by Sid Baliga, on a topic agreed with your institution in advance.</p>
+        <p>No motivational speeches. No recruitment pitches. Real practitioners talking about what actually works, what fails, and what they wish they knew earlier.</p>
+        <p>Students and faculty are the audience. The conversation is calibrated to a B-School campus context. The room leaves with something they can use.</p>
+      </div>
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-num">01</div>
+          <div class="pillar-label">Curated Panel</div>
+          <div class="pillar-body">2–3 senior practitioners. Hand-picked for the topic. No filler.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">02</div>
+          <div class="pillar-label">Sharp Moderation</div>
+          <div class="pillar-body">Sid moderates. The conversation has a destination. It doesn't drift.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">03</div>
+          <div class="pillar-label">Bespoke Topic</div>
+          <div class="pillar-body">Think. Brainstorm. Share.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAST -->
+<div class="past-bg">
+  <div class="section" id="history">
+    <div class="eyebrow">Where We've Been</div>
+    <div class="section-title">The rooms we've built.</div>
+    <div class="campus-grid">
+      <div class="campus-card"><div class="campus-name">IIT Hyderabad</div><div class="campus-city">Hyderabad</div></div>
+      <div class="campus-card"><div class="campus-name">Acharya Bangalore B-School</div><div class="campus-city">Bangalore</div></div>
+      <div class="campus-card"><div class="campus-name">Garden City University</div><div class="campus-city">Bangalore</div></div>
+      <div class="campus-card"><div class="campus-name">IIJNM</div><div class="campus-city">Indian Institute of Journalism &amp; New Media</div></div>
+      <div class="campus-card"><div class="campus-name">Vanguard Business School</div><div class="campus-city">Bangalore</div></div>
+      <div class="campus-card"><div class="campus-name">Dayananda Sagar Business Academy</div><div class="campus-city">Bangalore</div></div>
+      <div class="campus-card"><div class="campus-name">IFIM B-School</div><div class="campus-city">Bangalore</div></div>
+    </div>
+    <div class="past-note">
+      Season 01 ran across campuses in Bangalore and Hyderabad. Season 02 is here now!
+    </div>
+  </div>
+</div>
+
+<!-- NOMINATIONS -->
+<div class="nom-bg" id="nominate">
+  <div class="section">
+    <div class="eyebrow">Nominate a Panelist</div>
+    <div class="section-title">Know someone<br>the room needs?</div>
+
+    <div class="nom-intro">
+      <div class="nom-body">
+        <p>TBS panels work because the people in them have actually done the work — not just observed it. If you know someone whose thinking would shift how students see Sales or HR, we want to hear about them.</p>
+        <p>Nominations are how we find people who wouldn't otherwise raise their hand. Your referral carries weight. Self-nominations are equally welcome — if you think you belong in the room, make the case.</p>
+      </div>
+      <div class="nom-criteria">
+        <div class="criterion"><div class="c-dot"></div><div class="c-text">10+ years in Sales, HR, or adjacent leadership</div></div>
+        <div class="criterion"><div class="c-dot"></div><div class="c-text">Opinions earned through real experience — not theory</div></div>
+        <div class="criterion"><div class="c-dot"></div><div class="c-text">Can hold a room without a slide deck</div></div>
+        <div class="criterion"><div class="c-dot"></div><div class="c-text">Comfortable speaking candidly in front of students</div></div>
+        <div class="criterion"><div class="c-dot"></div><div class="c-text">Based in or willing to travel to Bangalore</div></div>
+      </div>
+    </div>
+
+    <!-- NOMINATION FORM -->
+    <div class="nom-form" id="nominationForm">
+
+      <!-- FIELDS (hidden on success) -->
+      <div class="form-fields">
+        <div class="form-title">Submit a Nomination</div>
+        <div class="form-sub">Takes under 2 minutes. We read every submission.</div>
+
+        <div class="form-grid">
+
+          <!-- Nominee Name -->
+          <div class="fg">
+            <label for="nom_name">Nominee's Full Name *</label>
+            <input
+              type="text"
+              id="nom_name"
+              name="nominee_name"
+              placeholder="e.g. Priya Sharma"
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- Nominee WhatsApp  ← fixed: moved to its own .fg cell -->
+          <div class="fg">
+            <label for="nom_whatsapp">Nominee's WhatsApp Number</label>
+            <input
+              type="tel"
+              id="nom_whatsapp"
+              name="nominee_whatsapp"
+              placeholder="e.g. +91 99000 92156"
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- Nominee Role -->
+          <div class="fg">
+            <label for="nom_role">Current Role &amp; Company</label>
+            <input
+              type="text"
+              id="nom_role"
+              name="nominee_role"
+              placeholder="e.g. VP Sales, Acme Corp"
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- Nominee Domain -->
+          <div class="fg">
+            <label for="nom_domain">Domain</label>
+            <select id="nom_domain" name="nominee_domain">
+              <option value="" disabled selected>Select one</option>
+              <option value="Sales">Sales</option>
+              <option value="HR / People">HR / People</option>
+              <option value="General Leadership">General Leadership</option>
+              <option value="Entrepreneurship">Entrepreneurship</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <!-- Nominee LinkedIn -->
+          <div class="fg full">
+            <label for="nom_linkedin">LinkedIn URL</label>
+            <input
+              type="url"
+              id="nom_linkedin"
+              name="nominee_linkedin"
+              placeholder="https://linkedin.com/in/..."
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- Nomination Reason -->
+          <div class="fg full">
+            <label for="nom_why">Why should this person be in the room? *</label>
+            <textarea
+              id="nom_why"
+              name="nomination_reason"
+              placeholder="What have they done? What would students learn from them? Be specific — generic answers get skipped."
+            ></textarea>
+          </div>
+
+          <!-- ── Divider label ── -->
+          <div class="fg full" style="margin-top:8px;">
+            <span style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--amber-dark);font-weight:500;">About You (the Nominator)</span>
+            <div style="height:1px;background:var(--border-strong);margin-top:8px;"></div>
+          </div>
+
+          <!-- Nominator Name -->
+          <div class="fg">
+            <label for="nominator_name">Your Name *</label>
+            <input
+              type="text"
+              id="nominator_name"
+              name="nominator_name"
+              placeholder="Your name"
+              autocomplete="name"
+            />
+          </div>
+
+          <!-- Nominator Email -->
+          <div class="fg">
+            <label for="nominator_email">Your Email Address *</label>
+            <input
+              type="email"
+              id="nominator_email"
+              name="nominator_email"
+              placeholder="hello@example.com"
+              autocomplete="email"
+            />
+          </div>
+
+          <!-- Error banner (spans full width, shown on API error) -->
+          <div class="form-error-banner" id="form-error-banner" role="alert">
+            <span>⚠&nbsp;</span>
+            <span id="form-error-msg">Something went wrong. Please try again.</span>
+          </div>
+
+        </div><!-- /form-grid -->
+
+        <div class="form-footer">
+          <button type="button" class="btn-submit" id="btn-submit" onclick="submitNom()">
+            <div class="btn-spinner"></div>
+            <span class="btn-label">Submit Nomination →</span>
+          </button>
+          <div class="form-small">We'll be in touch within 3 working days if it's a strong fit for an upcoming session.</div>
+        </div>
+      </div><!-- /form-fields -->
+
+      <!-- SUCCESS STATE -->
+      <div class="form-success">
+        <div class="success-mark">✦</div>
+        <div class="success-title">Nomination received.</div>
+        <div class="success-body" id="success-body">
+          Thank you — we read every submission.<br>
+          If your nominee is a strong fit, we'll reach out within 3 working days.
+        </div>
+      </div>
+
+    </div><!-- /nom-form -->
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-outer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <a href="#" class="tbs-logo tbs-logo-lg">
+        <div class="tbs-logo-blocks">
+          <div class="tbs-logo-block">T</div>
+          <div class="tbs-logo-block">B</div>
+          <div class="tbs-logo-block">S</div>
+        </div>
+        <div class="tbs-logo-wordmark">
+          <span class="tbs-logo-word">The</span>
+          <span class="tbs-logo-word">Bespoke</span>
+          <span class="tbs-logo-word">Show</span>
+        </div>
+      </a>
+      <div class="footer-meta">Hosted by Sid Baliga &nbsp;·&nbsp;</div>
+      <div class="footer-tm">® The Bespoke Show is a registered trademark.</div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-contact"><a href="tel:+919900092156">+91 99000 92156</a></div>
+      <div class="footer-email">&nbsp;</div>
+      <div class="footer-season">The Bespoke Show · Season 02 · 2026</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── Helpers ───────────────────────────────────────────────────── */
+  function val(id) {
+    var el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  }
+
+  function markError(id) {
+    var el = document.getElementById(id);
+    if (el) el.classList.add('field-error');
+  }
+
+  function clearErrors() {
+    document.querySelectorAll('.field-error').forEach(function (el) {
+      el.classList.remove('field-error');
+    });
+    hideErrorBanner();
+  }
+
+  function showErrorBanner(msg) {
+    var banner = document.getElementById('form-error-banner');
+    var msgEl  = document.getElementById('form-error-msg');
+    if (msgEl) msgEl.textContent = msg;
+    if (banner) {
+      banner.classList.add('visible');
+      banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function hideErrorBanner() {
+    var banner = document.getElementById('form-error-banner');
+    if (banner) banner.classList.remove('visible');
+  }
+
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function setLoading(on) {
+    var btn = document.getElementById('btn-submit');
+    if (!btn) return;
+    btn.disabled = on;
+    if (on) {
+      btn.classList.add('loading');
+      btn.querySelector('.btn-label').textContent = 'Submitting…';
+    } else {
+      btn.classList.remove('loading');
+      btn.querySelector('.btn-label').textContent = 'Submit Nomination →';
+    }
+  }
+
+  /* ── Clear field error on input ────────────────────────────────── */
+  ['nom_name', 'nom_why', 'nominator_name', 'nominator_email'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', function () {
+        el.classList.remove('field-error');
+        hideErrorBanner();
+      });
+    }
+  });
+
+  /* ── Main submit function (called by onclick) ───────────────────── */
+  window.submitNom = async function () {
+    clearErrors();
+
+    var data = {
+      nominee_name:      val('nom_name'),
+      nominee_whatsapp:  val('nom_whatsapp'),
+      nominee_role:      val('nom_role'),
+      nominee_domain:    val('nom_domain'),
+      nominee_linkedin:  val('nom_linkedin'),
+      nomination_reason: val('nom_why'),
+      nominator_name:    val('nominator_name'),
+      nominator_email:   val('nominator_email'),
+    };
+
+    /* Client-side validation */
+    var hasError = false;
+
+    if (!data.nominee_name) {
+      markError('nom_name');
+      hasError = true;
+    }
+    if (!data.nomination_reason) {
+      markError('nom_why');
+      hasError = true;
+    }
+    if (!data.nominator_name) {
+      markError('nominator_name');
+      hasError = true;
+    }
+    if (!data.nominator_email || !isValidEmail(data.nominator_email)) {
+      markError('nominator_email');
+      hasError = true;
+    }
+
+    if (hasError) {
+      showErrorBanner('Please fill in all required fields correctly.');
+      var firstErr = document.querySelector('.field-error');
+      if (firstErr) firstErr.focus();
+      return;
+    }
+
+    /* Fire the API request */
+    setLoading(true);
+
+    try {
+      var res = await fetch('/api/nomination', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(data),
+      });
+
+      var json = {};
+      try { json = await res.json(); } catch (_) {}
+
+      if (!res.ok) {
+        throw new Error(json.error || ('Server error (' + res.status + '). Please try again.'));
+      }
+
+      /* Success — swap to success panel */
+      var form = document.getElementById('nominationForm');
+      if (form) form.classList.add('submitted');
+      window.scrollTo({ top: document.getElementById('nominate').offsetTop - 80, behavior: 'smooth' });
+
+    } catch (err) {
+      showErrorBanner(err.message || 'Unexpected error. Please try again shortly.');
+      setLoading(false);
+    }
+  };
+
+  /* ── Smooth scroll for anchor links ────────────────────────────── */
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

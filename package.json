@@ -1,0 +1,21 @@
+{
+  "name": "tbs-nomination",
+  "version": "1.0.0",
+  "description": "TBS Nomination Form — Vercel + Supabase + Resend",
+  "private": true,
+  "engines": {
+    "node": ">=18.x"
+  },
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'No build step required'",
+    "lint": "echo 'No linter configured'"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.43.4",
+    "resend": "^3.2.0"
+  },
+  "devDependencies": {
+    "vercel": "^34.0.0"
+  }
+}
