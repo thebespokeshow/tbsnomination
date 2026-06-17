@@ -39,32 +39,9 @@
   }
 
   /* ── TBS LOGO ── */
-  .tbs-logo {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-    text-decoration: none;
-  }
-  .tbs-logo-blocks { display: flex; gap: 4px; }
-  .tbs-logo-block {
-    width: 28px; height: 28px;
-    background: var(--block-bg);
-    border-radius: 3px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 15px; font-weight: 700; color: #fff;
-    font-family: var(--font); flex-shrink: 0;
-  }
-  .tbs-logo-wordmark { display: flex; gap: 4px; }
-  .tbs-logo-word {
-    font-size: 7.5px; font-weight: 600; letter-spacing: 0.13em;
-    color: var(--burgundy); text-transform: uppercase;
-    width: 28px; text-align: center; display: block;
-  }
-  .tbs-logo-lg .tbs-logo-block { width: 38px; height: 38px; font-size: 20px; }
-  .tbs-logo-lg .tbs-logo-word  { font-size: 9px; width: 38px; }
-  .tbs-logo-lg .tbs-logo-blocks { gap: 5px; }
-  .tbs-logo-lg .tbs-logo-wordmark { gap: 5px; }
+  .tbs-logo { display: inline-block; text-decoration: none; line-height: 0; }
+  .tbs-logo img { height: 52px; width: auto; display: block; }
+  .tbs-logo-lg img { height: 68px; width: auto; display: block; }
 
   /* ── NAV ── */
   nav {
@@ -291,16 +268,7 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="tbs-logo">
-    <div class="tbs-logo-blocks">
-      <div class="tbs-logo-block">T</div>
-      <div class="tbs-logo-block">B</div>
-      <div class="tbs-logo-block">S</div>
-    </div>
-    <div class="tbs-logo-wordmark">
-      <span class="tbs-logo-word">The</span>
-      <span class="tbs-logo-word">Bespoke</span>
-      <span class="tbs-logo-word">Show</span>
-    </div>
+    <img src="images/tbs-logo.png" alt="The Bespoke Show">
   </a>
   <div class="nav-right">
     <span class="nav-season">Season 02 · 2026</span>
@@ -314,7 +282,7 @@
   <div class="hero-title">THE ROOM<br><span class="accent">THINKS.</span></div>
   <div class="hero-sub">
     Senior practitioners. A curated conversation.<br>
-    An honest room your students won't find anywhere else.
+    An honest room to Think. Brainstorm. Share.
   </div>
   <div class="hero-stats">
     <div>
@@ -326,8 +294,8 @@
       <div class="stat-label">Minutes. No fluff.</div>
     </div>
     <div>
-      <div class="stat-num">S02</div>
-      <div class="stat-label">Now returning</div>
+      <div class="stat-num">Season 02</div>
+      <div class="stat-label">Starts Soon</div>
     </div>
   </div>
 </div>
@@ -551,16 +519,7 @@
   <div class="footer-inner">
     <div class="footer-left">
       <a href="#" class="tbs-logo tbs-logo-lg">
-        <div class="tbs-logo-blocks">
-          <div class="tbs-logo-block">T</div>
-          <div class="tbs-logo-block">B</div>
-          <div class="tbs-logo-block">S</div>
-        </div>
-        <div class="tbs-logo-wordmark">
-          <span class="tbs-logo-word">The</span>
-          <span class="tbs-logo-word">Bespoke</span>
-          <span class="tbs-logo-word">Show</span>
-        </div>
+        <img src="images/tbs-logo.png" alt="The Bespoke Show">
       </a>
       <div class="footer-meta">Hosted by Sid Baliga &nbsp;·&nbsp;</div>
       <div class="footer-tm">® The Bespoke Show is a registered trademark.</div>
