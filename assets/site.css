@@ -199,3 +199,9 @@ nav.site-nav {
 }
 @media (max-width: 520px) { .masonry { columns: 1; } .nav-links a .long { display: none; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* speaker-first additions */
+.text-link { font-size: 13px; font-weight: 500; color: var(--amber-dark); text-decoration: none; border-bottom: 1px solid rgba(122,75,14,0.3); padding-bottom: 2px; transition: border-color .2s; }
+.text-link:hover { border-color: var(--amber-dark); }
+.hero-actions { align-items: center; gap: 24px; }
+.campus-cta { margin-top: 28px; }
