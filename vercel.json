@@ -1,14 +1,11 @@
 {
   "version": 2,
+  "cleanUrls": true,
   "outputDirectory": ".",
   "functions": {
-    "api/nomination.js": {
-      "maxDuration": 15
-    }
+    "api/nomination.js": { "maxDuration": 15 },
+    "api/host.js": { "maxDuration": 15 }
   },
-  "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
-  ],
   "headers": [
     {
       "source": "/api/(.*)",
@@ -17,6 +14,10 @@
         { "key": "Access-Control-Allow-Methods", "value": "POST, OPTIONS" },
         { "key": "Access-Control-Allow-Headers", "value": "Content-Type" }
       ]
+    },
+    {
+      "source": "/images/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
     }
   ]
 }

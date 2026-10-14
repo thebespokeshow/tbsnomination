@@ -1,6 +1,19 @@
-# The Bespoke Show — Nomination Form
+# The Bespoke Show — Website
 
-A nomination portal for Season 02 of **The Bespoke Show**, deployed on **Vercel** with **Supabase** (database) and **Resend** (email notifications).
+Website for **The Bespoke Show** (Season 02): Home, Gallery, Host TBS and Nominate a Speaker pages.
+Deployed on **Vercel** with **Supabase** (database) and **Resend** (email notifications).
+
+## Pages
+
+| URL | File | Purpose |
+|---|---|---|
+| `/` | `index.html` | Home, Season 02 update, campuses |
+| `/gallery` | `gallery.html` | Photos + IIT Hyderabad video |
+| `/nominate` | `nominate.html` | Speaker nomination form → `api/nomination.js` |
+| `/host` | `host.html` | Colleges request a session → `api/host.js` |
+
+Shared styling and scripts live in `assets/`. Photos live in `images/gallery/`.
+To switch on Meta tracking, paste the Pixel ID into `assets/config.js`.
 
 ## Tech Stack
 
@@ -36,6 +49,8 @@ Set these in your **Vercel project dashboard** → Settings → Environment Vari
 > environment — it is never sent to the browser.
 
 ## Database Setup
+
+Run `supabase/host_requests.sql` once for the Host form. The nominations table:
 
 Run the following SQL in **Supabase → SQL Editor** to create the table:
 
