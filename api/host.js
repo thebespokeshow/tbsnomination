@@ -11,8 +11,10 @@ const SUPABASE_URL         = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY;
 const RESEND_API_KEY       = process.env.RESEND_API_KEY;
 
-const NOTIFY_EMAIL = 'siddarth1981@gmail.com';
-const FROM_EMAIL   = 'TBS Host Requests <onboarding@resend.dev>'; // swap to your verified domain once ready
+// Alert recipients. Override in Vercel with TBS_NOTIFY_EMAIL (comma-separated for several).
+const NOTIFY_EMAIL = (process.env.TBS_NOTIFY_EMAIL || 'siddarth1981@gmail.com').split(',').map(function (e) { return e.trim(); }).filter(Boolean);
+// Sender. Override in Vercel with TBS_FROM_EMAIL once your domain is verified in Resend.
+const FROM_EMAIL   = process.env.TBS_FROM_EMAIL || 'TBS Host Requests <onboarding@resend.dev>';
 const TABLE_NAME   = 'host_requests';
 
 let _supabase = null;
@@ -123,7 +125,7 @@ module.exports = async function handler(req, res) {
     const resend = getResend();
     const { error: emailError } = await resend.emails.send({
       from:     FROM_EMAIL,
-      to:       [NOTIFY_EMAIL],
+      to:       NOTIFY_EMAIL,
       reply_to: d.email,
       subject:  `🎓 TBS host request: ${d.institution}`,
       html:     buildEmailHtml(d),
